@@ -1,0 +1,20 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+
+tmp
+
+local.properties
+
+# Android Studio
+.idea/
+build/
+artifacts/
+.gradle
+*.iml
+/.nb-gradle/
+/external-libs/.nb-gradle/private/
