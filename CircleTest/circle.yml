@@ -1,0 +1,13 @@
+machine:
+  environment:
+    ANDROID_HOME: /usr/local/android-sdk-linux
+
+dependencies:
+  pre:
+
+  override:
+    - ./gradlew dependencies
+
+test:
+  override:
+    - ./gradlew build
