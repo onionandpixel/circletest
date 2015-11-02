@@ -5,9 +5,6 @@ machine:
 dependencies:
   pre:
 
-  override:
-    - ./gradlew dependencies
-
 test:
   override:
     - ./gradlew build
