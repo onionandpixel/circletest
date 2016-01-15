@@ -1,6 +1,6 @@
 general:
     artifacts:
-        - /home/ubuntu/your-app-name/app/build/outputs/apk/
+        - /home/ubuntu/circletest/app/build/outputs/apk/
 
 machine:
     environment:
