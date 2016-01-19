@@ -2,6 +2,7 @@ general:
     artifacts:
         - /home/ubuntu/circletest/app/build/outputs/apk/
 
+		
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
