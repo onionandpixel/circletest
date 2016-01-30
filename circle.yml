@@ -8,5 +8,5 @@ dependencies:
 
 test:
     override:
-        ./gradlew clean assemble -PdisablePreDex
+        - ./gradlew clean assemble -PdisablePreDex
         - cp -r circletest/build/outputs $CIRCLE_ARTIFACTS
