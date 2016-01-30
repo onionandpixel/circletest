@@ -16,4 +16,4 @@ test:
     override:
         - (./gradlew assemble):
             timeout: 360
-        - cp -r project-name/build/outputs $CIRCLE_ARTIFACTS
+        - cp -r circletest/build/outputs $CIRCLE_ARTIFACTS
