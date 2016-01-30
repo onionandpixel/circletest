@@ -1,10 +1,7 @@
-general:
-    artifacts:
-        - /home/ubuntu/circletest/app/build/outputs/apk/
-
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
+        CIRCLE_ARTIFACTS: 
 
 dependencies:
     override:
@@ -14,6 +11,5 @@ dependencies:
 
 test:
     override:
-        - (./gradlew assemble):
-            timeout: 360
+        - ./gradlew assemble
         - cp -r circletest/build/outputs $CIRCLE_ARTIFACTS
