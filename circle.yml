@@ -1,7 +1,6 @@
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
-        CIRCLE_ARTIFACTS: 
 
 dependencies:
     override:
