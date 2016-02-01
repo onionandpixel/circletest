@@ -10,3 +10,5 @@ test:
     override:
         - ./gradlew clean assembleDebug -PdisablePreDex
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+        - ./gradlew test
+        - cp -r app/build/test-results $CIRCLE_TEST_REPORTS
