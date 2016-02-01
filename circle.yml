@@ -8,7 +8,21 @@ dependencies:
 
 test:
     override:
+        #assemble the apk
         - ./gradlew clean assembleDebug -PdisablePreDex
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+        #run jvm unit tests
         - ./gradlew test
         - cp -r app/build/test-results $CIRCLE_TEST_REPORTS
+        # start the emulator
+        - emulator -avd circleci-android22 -no-audio -no-window:
+            background: true
+            parallel: true
+        # wait for it to have booted
+        - circle-android wait-for-boot
+        # run tests  against the emulator.
+        - ./gradlew connectedAndroidTest
+        # copy the test results to the test results directory.
+        - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
+
+
