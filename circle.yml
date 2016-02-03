@@ -15,6 +15,7 @@ test:
         - ./gradlew test
         - cp -r app/build/test-results $CIRCLE_TEST_REPORTS
         - cp -r app/build/reports/tests $CIRCLE_TEST_REPORTS
+        - cp -r app/build/reports/checkstyle $CIRCLE_ARTIFACTS
         # start the emulator
         #- emulator -avd circleci-android22 -no-audio -no-window:
         #   background: true

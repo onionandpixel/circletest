@@ -1,4 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+
+//This would be the original dsl, though some settings works only in the task.
+checkstyle {
+    configFile rootProject.file('config/checkstyle/checkstyle.xml')
+    toolVersion '6.15'
+
+    configProperties.samedir = "${project.rootDir}/config/checkstyle/"
+
+    showViolations = false
+    ignoreFailures = false
+}
 
 android {
     compileSdkVersion 23
@@ -18,6 +30,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+
+
+task checkStyle(type: Checkstyle) {
+    configFile rootProject.file('config/checkstyle/checkstyle.xml')
+
+    configProperties.samedir = "${project.rootDir}/config/checkstyle/"
+
+    showViolations = false
+    ignoreFailures = false
+    source 'src/main/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+        reports {
+            html {
+                destination "${rootDir}/app/build/reports/checkstyle/checkstyle.html"
+            }
+        }
+
+    classpath = files()
+}
+
+//Add checkstyle as the first task.
+project.afterEvaluate {
+    preBuild.dependsOn checkStyle
 }
 
 dependencies {
