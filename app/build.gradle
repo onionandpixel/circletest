@@ -22,7 +22,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.circletest.CiEmulatorRunner"
     }
     buildTypes {
         release {
