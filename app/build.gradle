@@ -1,6 +1,6 @@
+apply plugin: 'jacoco'
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
-apply plugin: 'jacoco'
 
 //This would be the original dsl, though some settings works only in the task.
 checkstyle {
@@ -48,11 +48,11 @@ task checkStyle(type: Checkstyle) {
     source 'src/main/java'
     include '**/*.java'
     exclude '**/gen/**'
-        reports {
-            html {
-                destination "${rootDir}/app/build/reports/checkstyle/checkstyle.html"
-            }
+    reports {
+        html {
+            destination "${rootDir}/app/build/reports/checkstyle/checkstyle.html"
         }
+    }
 
     classpath = files()
 }
@@ -61,14 +61,26 @@ task coverageReport(type: JacocoReport) {
     println("${projectDir}/src/main/")
     def srcDir = "${projectDir}/src/main/"
     sourceDirectories = files(srcDir)
-    classDirectories = files("${projectDir}/build/intermediates/classes/debug")
+    classDirectories = fileTree(
+            dir: "${projectDir}/build/intermediates/classes/debug/com",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
     executionData = files('build/jacoco/testDebugUnitTest.exec')
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
 
 //Add checkstyle as the first task.
 project.afterEvaluate {
     preBuild.dependsOn checkStyle
-    coverageReport.dependsOn test
+    coverageReport.dependsOn testDebugUnitTest
+	test.dependsOn coverageReport
 }
 
 dependencies {
