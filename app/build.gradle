@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 
 //This would be the original dsl, though some settings works only in the task.
 checkstyle {
@@ -25,6 +26,9 @@ android {
         testInstrumentationRunner "com.example.circletest.CiEmulatorRunner"
     }
     buildTypes {
+        debug{
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -53,9 +57,18 @@ task checkStyle(type: Checkstyle) {
     classpath = files()
 }
 
+task coverageReport(type: JacocoReport) {
+    println("${projectDir}/src/main/")
+    def srcDir = "${projectDir}/src/main/"
+    sourceDirectories = files(srcDir)
+    classDirectories = files("${projectDir}/build/intermediates/classes/debug")
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
+}
+
 //Add checkstyle as the first task.
 project.afterEvaluate {
     preBuild.dependsOn checkStyle
+    coverageReport.dependsOn test
 }
 
 dependencies {
