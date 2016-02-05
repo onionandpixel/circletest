@@ -58,8 +58,8 @@ task checkStyle(type: Checkstyle) {
 }
 
 task coverageReport(type: JacocoReport) {
-    println("${projectDir}/src/main/")
-    def srcDir = "${projectDir}/src/main/"
+    println("${projectDir}/src/main/java")
+    def srcDir = "${projectDir}/src/main/java"
     sourceDirectories = files(srcDir)
     classDirectories = fileTree(
             dir: "${projectDir}/build/intermediates/classes/debug/com",
