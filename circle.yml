@@ -28,6 +28,7 @@ test:
 #        - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
 deployment:
     continous:
+      branch: master
       #we could specify branch here might even tags, or restrict to nightly builds
       commands:
         - ./gradlew deployGoogleDrive
