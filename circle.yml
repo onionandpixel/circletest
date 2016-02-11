@@ -26,5 +26,9 @@ test:
 #            timeout: 600
 #        # copy the test results to the test results directory.
 #        - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
-
+deployment:
+    continous:
+      #we could specify branch here might even tags, or restrict to nightly builds
+      commands:
+        - ./gradlew deployGoogleDrive
 
