@@ -79,7 +79,7 @@ task coverageReport(type: JacocoReport) {
 task packageArtifacts(type: Zip) {
     from "build/outputs/apk"
     baseName "circletest"
-    version "0.1"
+    version "0.1" + "." + System.getenv('CIRCLE_BUILD_NUM')
 }
 
 task createTarball(type: Tar) {
