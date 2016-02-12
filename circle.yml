@@ -21,10 +21,11 @@ test:
            parallel: true
         # wait for it to have booted
         - circle-android wait-for-boot
-        - adb shell input keyevent 82
         # run tests  against the emulator.
-        - (./gradlew connectedAndroidTest):
+        - (./gradlew assembleAndroidTest):
             timeout: 600
+        - adb shell input keyevent 82
+        - ./gradlew connectedCheck
         # copy the test results to the test results directory.
         - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
 deployment:

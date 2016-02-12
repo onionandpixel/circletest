@@ -3,7 +3,7 @@ package com.example.circletest;
 import static android.content.Context.KEYGUARD_SERVICE;
 import static android.content.Context.POWER_SERVICE;
 import static android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP;
-import static android.os.PowerManager.FULL_WAKE_LOCK;
+import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 import static android.os.PowerManager.ON_AFTER_RELEASE;
 
 import android.app.KeyguardManager;
@@ -30,7 +30,7 @@ public final class CiEmulatorRunner extends AndroidJUnitRunner {
             keyguard.newKeyguardLock(name).disableKeyguard();
             // Wake up the screen.
             PowerManager power = (PowerManager) app.getSystemService(POWER_SERVICE);
-            wakeLock = power.newWakeLock(FULL_WAKE_LOCK | ACQUIRE_CAUSES_WAKEUP | ON_AFTER_RELEASE, name);
+            wakeLock = power.newWakeLock(PARTIAL_WAKE_LOCK | ACQUIRE_CAUSES_WAKEUP | ON_AFTER_RELEASE, name);
             wakeLock.acquire();
 
         }
