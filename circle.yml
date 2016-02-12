@@ -8,11 +8,11 @@ dependencies:
 
 test:
     override:
-        #run jvm unit tests
-        - ./gradlew test -PdisablePreDex
         #assemble the apk if tests were successful
         - ./gradlew clean assembleDebug -PdisablePreDex
 #        # start the emulator
+        #run jvm unit tests
+        - ./gradlew test -PdisablePreDex
 #        - emulator -avd circleci-android21 -no-audio -no-window:
 #           background: true
 #           parallel: true
