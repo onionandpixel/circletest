@@ -25,7 +25,7 @@ test:
         - (./gradlew assembleAndroidTest):
             timeout: 600
         - adb shell input keyevent 82
-        - ./gradlew connectedCheck
+        - ./gradlew connectedDebugAndroidTest
         # copy the test results to the test results directory.
         - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
 deployment:
