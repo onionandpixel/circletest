@@ -34,6 +34,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    applicationVariants.all { variant ->
+
+        deleteUnalignedFiles(variant)
+    }
 }
 
 
@@ -81,6 +86,23 @@ task packageArtifacts(type: Zip) {
     baseName "circletest"
     version "0.1" + "." + System.getenv('CIRCLE_BUILD_NUM')
 }
+
+
+def deleteUnalignedFiles(variant) {
+    variant.assemble.doLast {
+        variant.outputs.each { output ->
+            println "aligned " + output.outputFile
+            println "unaligned " + output.packageApplication.outputFile
+
+            File file = output.packageApplication.outputFile;
+            if (variant.buildType.zipAlignEnabled && file.getName().contains("unaligned")) {
+                println "deleting " + file.getName()
+                file.delete()
+            }
+        }
+    }
+}
+
 
 task createTarball(type: Tar) {
     baseName = 'circletest'
