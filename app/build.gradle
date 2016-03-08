@@ -82,9 +82,16 @@ task coverageReport(type: JacocoReport) {
 }
 
 task packageArtifacts(type: Zip) {
-    from "build/outputs/apk"
-    baseName "circletest"
-    version "0.1" + "." + System.getenv('CIRCLE_BUILD_NUM')
+    if('true'.equals(System.getenv('TRAVIS'))){
+        baseName = 'travis'
+        compression = Compression.GZIP
+        from "build/outputs/"
+    } else {
+        from "build/outputs/apk"
+        baseName "circletest"
+        version "0.1" + "." + System.getenv('CIRCLE_BUILD_NUM')
+    }
+
 }
 
 
@@ -103,32 +110,24 @@ def deleteUnalignedFiles(variant) {
     }
 }
 
-
-task createTarball(type: Tar) {
-    baseName = 'circletest'
-    compression = Compression.GZIP
-    from "build/outputs/apk"
-
+task obtainGoogleDriveTokens(type: by.dev.madhead.gbp.tasks.gdrive.ObtainGoogleDriveTokensTask) {
+    clientId = System.getenv("GDRIVE_CLIENT_ID")
+    clientSecret = System.getenv("GDRIVE_CLIENT_SECRET")
 }
 
-//task obtainGoogleDriveTokens(type: by.dev.madhead.gbp.tasks.gdrive.ObtainGoogleDriveTokensTask) {
-//    clientId = System.getenv("GDRIVE_CLIENT_ID")
-//    clientSecret = System.getenv("GDRIVE_CLIENT_SECRET")
-//}
-//
-//task deployGoogleDrive(type: by.dev.madhead.gbp.tasks.gdrive.GoogleDriveUploadTask) {
-//    clientId = System.getenv('GDRIVE_CLIENT_ID')
-//    clientSecret = System.getenv('GDRIVE_CLIENT_SECRET')
-//    accessToken = System.getenv('GDRIVE_ACCESS_TOKEN')
-//    refreshToken = System.getenv('GDRIVE_REFRESH_TOKEN')
-//
-//    dependsOn packageArtifacts                 // 1
-//    mimeType = 'application/zip'         // 2
-//    println(packageArtifacts.archivePath)
-//    archive =  packageArtifacts.archivePath     // 3
-//    path = ['CircleTest']           // 4
-//    listenForUpload = true                  // 5
-//}
+task deployGoogleDrive(type: by.dev.madhead.gbp.tasks.gdrive.GoogleDriveUploadTask) {
+    clientId = System.getenv('GDRIVE_CLIENT_ID')
+    clientSecret = System.getenv('GDRIVE_CLIENT_SECRET')
+    accessToken = System.getenv('GDRIVE_ACCESS_TOKEN')
+    refreshToken = System.getenv('GDRIVE_REFRESH_TOKEN')
+
+    dependsOn packageArtifacts                 // 1
+    mimeType = 'application/zip'         // 2
+    println(packageArtifacts.archivePath)
+    archive =  packageArtifacts.archivePath     // 3
+    path = ['CircleTest']           // 4
+    listenForUpload = true                  // 5
+}
 
 //Add checkstyle as the first task.
 project.afterEvaluate {
