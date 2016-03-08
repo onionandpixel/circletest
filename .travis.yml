@@ -40,9 +40,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-deploy:
-  skip_cleanup: true
-  on:
-    tags: true
-  - ./gradlew deployGoogleDrive
+after_success:
+    - ./gradlew deployGoogleDrive
 
