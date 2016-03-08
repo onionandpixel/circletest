@@ -84,7 +84,6 @@ task coverageReport(type: JacocoReport) {
 task packageArtifacts(type: Zip) {
     if('true'.equals(System.getenv('TRAVIS'))){
         baseName = 'travis'
-        compression = Compression.GZIP
         from "build/outputs/"
     } else {
         from "build/outputs/apk"
