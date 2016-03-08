@@ -84,7 +84,9 @@ task coverageReport(type: JacocoReport) {
 task packageArtifacts(type: Zip) {
     if('true'.equals(System.getenv('TRAVIS'))){
         baseName = 'travis'
-        from "build/"
+        from "build/outputs"
+        from "build/reports"
+        from "build/test-results"
     } else {
         from "build/outputs/apk"
         baseName "circletest"
