@@ -33,7 +33,9 @@ before_script:
   
 script:
    - chmod +x gradlew
-   - ./gradlew connectedAndroidTest
+   - ./gradlew clean assembleDebug -PdisablePreDex
+   - ./gradlew test -PdisablePreDex
+   - ./gradlew connectedDebugAndroidTest
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
