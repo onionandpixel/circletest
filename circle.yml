@@ -13,12 +13,12 @@ test:
 #        # start the emulator
         #run jvm unit tests
         - ./gradlew test -PdisablePreDex
-        - emulator -avd circleci-android21 -no-audio -no-window &:
+        - emulator -avd circleci-android21 -no-audio -no-window:
            background: true
            parallel: true
         # wait for it to have booted
         - circle-android wait-for-boot
-        - adb shell input keyevent 82 &
+        - adb shell input keyevent 82
         # run tests  against the emulator.
         - ./gradlew connectedDebugAndroidTest
         - cp -r app/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS
